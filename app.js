@@ -2,6 +2,11 @@ var express = require('express');
 var app = express();
 var port = 3000
 
+// We require and use our logger module in our application.
+// './' specifies that this is a local module and not a Node module.
+var logger = require('./logger');
+app.use(logger);
+
 // The app.use function adds middleware to the application stack.
 // static() function is middleware that serves files from the public folder.
 app.use(express.static('public'));
