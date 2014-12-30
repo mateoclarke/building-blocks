@@ -2,12 +2,16 @@ var express = require('express');
 var app = express();
 var port = 3000
 
-app.get('/', function(request, response) {
-	response.send('I\'m so fresh to Express');
-	/* This does the same as above but using Node commands */
-	// response.write('I\'m so fresh to Node.js');
-	// response.end();
-});
+// The app.use function adds middleware to the application stack.
+// static() function is middleware that serves files from the public folder.
+app.use(express.static('public'));
+
+	/* This does the same as above. The index.html file is served from Express.
+	__dirname is the name of the directory the currently executing script resides in.
+	*/
+	// app.get('/', function(request, response) {
+	// 	response.sendFile(__dirname + '/public/index.html');
+	// });
 
 app.get('/blocks', function(request, response) {
 	var blocks = ['Fixed', 'Movable', 'Rotating'];
@@ -17,7 +21,8 @@ app.get('/blocks', function(request, response) {
 		The json() function reads better
 		when all we respond with is JSON.
 		The same as send(), for Objects and
-		Arrays */
+		Arrays 
+		*/
 	// response.send(blocks);
 });
 
