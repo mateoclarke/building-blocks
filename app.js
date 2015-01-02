@@ -20,6 +20,7 @@ app.use(express.static('public'));
 
 // MIDDLEWARE for Parsing Form Data
 var bodyParser = require('body-parser');
+	// The extended false option forces the use of the native querystring Node library.
 var parseUrlencoded = bodyParser.urlencoded({ extended: false });
 
 // PROPERTIES ON THE REQUEST OBJECT
@@ -34,24 +35,7 @@ app.param('name', function (request, response, next) {
 	next();
 });
 
-
-// POST ROUTE
-// Routes can take multiple handlers as arguemnts and will call them sequentially.
-// Using multiple route handlers is useful for re-using middleware that load resources, 
-// perform validations, authentication, etc.
-app.post('/blocks', parseUrlencoded, function(request, response){
-	
-	// Form submitted date can be accessed through request.body Object
-	var newBlock = request.body;
-
-	// The form elements are parsed to object properties, name and description
-	blocks[newBlock.name] = newBlock.description;
-
-	// The response includes proper 201 Created status code and responds with the block name.
-	response.status(201).json(newBlock.name);
-});
-
-// ROUTES
+// GET ROUTES
 app.get('/blocks', function(request, response) {
 	if (request.query.limit >= 0) {
 		response.json(blocks.slice(0, request.query.limit))
@@ -88,6 +72,28 @@ app.get('/blocks2', function(request, response){
 // REDIRECTING ROUTE
 app.get('/blocks3', function(request, response) {
 	response.redirect(301, '/parts');
+});
+
+// POST ROUTE
+// Routes can take multiple handlers as arguemnts and will call them sequentially.
+// Using multiple route handlers is useful for re-using middleware that load resources, 
+// perform validations, authentication, etc.
+app.post('/blocks', parseUrlencoded, function(request, response){
+	// Form submitted date can be accessed through request.body Object
+	var newBlock = request.body;
+	// The form elements are parsed to object properties, name and description
+	blocks[newBlock.name] = newBlock.description;
+	// The response includes proper 201 Created status code and responds with the block name.
+	response.status(201).json(newBlock.name);
+});
+
+// DELETE ROUTE
+// The delete route takes the block name as argument.
+app.delete('/blocks/:name', function(request, response){
+	// The delete operator from JavaScript removes a property from an object.
+	delete blocks[request.blockName];
+	// The sendStatus() function sets both the status code and the response body.
+	response.sendStatus(200);
 });
 
 // LISTENING PORT & MESSAGE
