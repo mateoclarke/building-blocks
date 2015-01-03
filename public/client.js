@@ -45,7 +45,7 @@ $(function(){
 		var list = [];
 		for(var i in blocks){
 			block = blocks[i];
-			content = '<a href="/blocks/'+block+'">'+block+'</a>'+'<a href="#" data-block="'+block+'"><img src="trashcan.png"></a>';
+			content = '<a href="/blocks/'+block+'">'+block+'</a>'+'<a href="#" data-block="'+block+'"><img src="delete.png"></a>';
 			list.push($('<li>', {html: content }));
 		}
 		$('.block-list').append(list);
