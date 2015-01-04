@@ -26,7 +26,18 @@ $(function(){
 		});
 	});
 
-	$('.block-list').on('click', 'a[data-block]', function(event){
+	function appendToList(blocks) {
+		var list = [];
+		for(var i in blocks){
+			block = blocks[i];
+			content = '<a href="/blocks/'+block+'">'+block+'</a>'+'<a href="#" data-block="'+block+'"><img src="delete.png"></a>';
+			list.push($('<li>', {html: content }));
+		}
+		$('.block-list').append(list);
+	}
+
+
+	$('.block-list').on('click', 'a[data-block]', function (event){
 		if (!confirm('Are you sure?')) {
 			return false;
 		}
@@ -41,13 +52,4 @@ $(function(){
 		});
 	});
 
-	function appendToList(blocks) {
-		var list = [];
-		for(var i in blocks){
-			block = blocks[i];
-			content = '<a href="/blocks/'+block+'">'+block+'</a>'+'<a href="#" data-block="'+block+'"><img src="delete.png"></a>';
-			list.push($('<li>', {html: content }));
-		}
-		$('.block-list').append(list);
-	}
 });

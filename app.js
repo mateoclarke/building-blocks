@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var port = 3000
 
 
 var locations = {
@@ -35,6 +34,7 @@ app.get('/locations/:name', function(request, response){
 
 
 // PORT
+var port = process.env.PORT || 3000
 app.listen(port, function(){
 	console.log('Listening on http://localhost:' + port + '/');
 });
